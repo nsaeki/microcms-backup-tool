@@ -161,8 +161,17 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+		err = client.backupContentMeta(baseDir)
+		if err != nil {
+			log.Fatal(err)
+		}
 	case "contents":
 		err = client.backupContents(baseDir)
+		if err != nil {
+			log.Fatal(err)
+		}
+	case "content-meta":
+		err = client.backupContentMeta(baseDir)
 		if err != nil {
 			log.Fatal(err)
 		}
