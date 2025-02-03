@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 )
 
 func (c *Client) backupMedia(baseDir string) error {
@@ -98,6 +99,10 @@ func (c *Client) getMediaAry(requiredRequestCount int, requestUnit int) ([]Media
 
 		ary = append(ary, response.Media...)
 		token = response.Token
+
+		// マネジメントAPIはレートリミットが低いため、制御のため2秒待つ
+		// https://document.microcms.io/manual/limitations#h0f65c647eb
+		time.Sleep(2 * time.Second)
 	}
 
 	return ary, nil

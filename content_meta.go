@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 func (c *Client) backupContentMeta(baseDir string) error {
@@ -110,6 +111,10 @@ func (c *Client) saveContentMeta(endpoint string, requiredRequestCount int, base
 
 		// 進捗状況の表示
 		fmt.Printf("[%d / %d] %s\n", i+1, requiredRequestCount, requestURL)
+
+		// マネジメントAPIはレートリミットが低いため、制御のため2秒待つ
+		// https://document.microcms.io/manual/limitations#h0f65c647eb
+		time.Sleep(2 * time.Second)
 	}
 
 	return nil
